@@ -365,14 +365,14 @@ def rank_genes_groups(
     if n_genes_user > X.shape[1]:
         n_genes_user = X.shape[1]
     # in the following, n_genes is simply another name for the total number of genes
-    n_genes = X.shape[1]
+    #n_genes = X.shape[1]
 
-    n_groups = groups_masks.shape[0]
-    ns = cp.zeros(n_groups, dtype=int)
-    for imask, mask in enumerate(groups_masks):
-        ns[imask] = cp.where(mask)[0].size
-    if reference != 'rest':
-        ireference = cp.where(groups_order == reference)[0][0]
+    #n_groups = groups_masks.shape[0]
+    #ns = cp.zeros(n_groups, dtype=int)
+    #for imask, mask in enumerate(groups_masks):
+    #    ns[imask] = cp.where(mask)[0].size
+    #if reference != 'rest':
+    #    ireference = cp.where(cp.array(groups_order == reference))[0][0]
     reference_indices = cp.arange(n_vars, dtype=int)
 
     rankings_gene_scores = []
@@ -390,7 +390,7 @@ def rank_genes_groups(
     grouping = labels.loc[grouping_mask]
     
     X = X[grouping_mask.values, :]  # Indexing with a series causes issues, possibly segfault
-    y = labels.loc[grouping]
+    #y = labels.loc[grouping]
     
     clf = LogisticRegression(**kwds)
     clf.fit(X.get(), grouping.to_array().astype('float32'))
