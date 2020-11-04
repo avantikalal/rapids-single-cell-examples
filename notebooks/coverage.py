@@ -72,10 +72,7 @@ def expand_interval(start, end, index, end_index,
         interval_end[j] = chrom_start
         interval_index[j] = index[i]
 
-def get_coverages(reads_orig, pad):
-    start = reads_orig['start'][0]
-    end = reads_orig['end'][len(reads_orig) - 1]
-
+def get_coverages(reads_orig, start, end, pad):
     reads = reads_orig.copy()
 
     # Get total window length
@@ -113,8 +110,8 @@ def get_coverages(reads_orig, pad):
     clusters = sorted(np.unique(reads['cluster'].to_array()))
     num_clusters = len(clusters)
 
-    # Create empty array
-    x = np.zeros(shape=(num_clusters, window_size))
+    # Create empty array of size along with padding taken into consideration
+    x = np.zeros(shape=(num_clusters, end - start + (2 * pad)))
 
     # Iterate over clusters to add coverage values
     for (i, cluster) in enumerate(clusters):
